@@ -42,15 +42,15 @@
                 <ul id="Nav" class="layui-nav layui-nav-tree">
 
                     <li class="layui-nav-item">
-                            <a href="<%=basePath%>operator/order.jsp">
+                            <a href="<%=basePath%>order.jsp">
                                 <i class="layui-icon">&#xe612;</i>
-                                <em>空气监测</em>
+                                <em>用户管理</em>
                             </a>
                         </li>
                     <li class="layui-nav-item">
-                            <a href="<%=basePath%>operator/form.jsp">
+                            <a href="<%=basePath%>form.jsp">
                                  <i class="layui-icon">&#xe612;</i>
-                                 <em>空气报表</em>
+                                 <em>群组管理</em>
                              </a>
                     </li>
                 </ul>

@@ -2,236 +2,133 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../common.jsp" %>
 <!DOCTYPE html >
-<html>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">	
-	<meta name="apple-mobile-web-app-capable" content="yes">	
-	<meta name="format-detection" content="telephone=no">	
     <link rel="stylesheet" href="<%=basePath%>assets/css/layui.css">
     <link rel="stylesheet" href="<%=basePath%>assets/css/view.css"/>
-  
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
     <link rel="icon" href="/favicon.ico">
     <title>管理后台</title>
-    <style>
-        html,body{
-            height:100%;
-            width:100%;
-        }
-	
-		#container{
-		  	height:100%;
-        width:100%;
-		}
-    .btn{
-            width:14em;
-            margin-left:3.2rem;  
-            margin-top: 0.8rem; 
-        }
-        .circalOut{
-           width: 100px;
-           height: 100px;
-           border-radius: 50%;
-           background: orange;
-           position: relative;
-           margin:auto;
-          
-       }
-       .circalInner{
-           width: 80px;
-           height: 80px;
-           border-radius: 50%;
-           background: #999;
-           text-align: center;
-           padding-top:25px;
-           box-sizing:border-box;
-           position: absolute;
-           top: 50%;
-           left: 50%;
-           transform: translate(-50%,-50%);
-       }
-       .air_top,.air_bottom{
-            display: flex;
-           text-align: center
-       }
-     
-    </style>
 </head>
 <body class="layui-view-body">
-    <div class="layui-content" id="box" style="display:none">
-       <div class="layui-content" id="AirDetail" style="width:60%;margin:auto;padding:10px 0px">
-         <div class="air_top">
-                <div class="circalOut">
-                    <div class="circalInner">
-                          PM2.5 
-                         <div class="PM25">
-                            
-                         </div>
-                    </div>
-                </div>
-                <div class="circalOut">
-                    <div class="circalInner">
-                         PM10
-                         <div class="PM10">
-                            
-                         </div>
-                    </div>
-                 </div>
-                 <div class="circalOut" >
-                     <div class="circalInner">
-                          CO
-                        <div class="CO">
-                            
-                         </div>
-                      </div>
-                 </div>
-         </div>
-          <div class="air_bottom" style="margin-top:10%">
-                <div class="circalOut">
-                    <div class="circalInner">
-                         NO2
-                        <div class="NO2">
-                            
-                         </div>
-                    </div>
-                </div>
-                <div class="circalOut">
-                    <div class="circalInner">
-                       O3
-                      <div class="O3">
-                            
-                         </div>
-                    </div>
-                </div>
-                <div class="circalOut">
-                    <div class="circalInner">
-                       SO2
-                       <div class="SO2">
-                            
-                         </div>
-                    </div>
-                </div>
-          </div>
-         </div>
+     <div class="layui-content" id="box" style="display:none">
+          
      </div>
- <div class="wrapper">
-	<div id="container"></div>
-	
-  </div>
-  
-
-
-<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.14&key=4f4388a14723c2fc91b750e5f9b0ce33&plugin=AMap.Geocoder"></script>
-<script src="<%=basePath%>assets/layui.all.js"></script>
-<script type="text/javascript">
-
- let layer = null
- let $ = null
- let city = ''
- layui.use('layer', function(){ layer = layui.layer,$ = layui.$ });
-    var map = new AMap.Map("container", {
-        resizeEnable: true,
-		  center: [114.147977,30.681939],
-          size:11
-    });
+    <div class="layui-content">
+        <div class="layui-page-header">
+            <div class="pagewrap">
+                <span class="layui-breadcrumb">
+                  <a>首页</a>
+                  <a>用户管理</a>
+                </span>
+                
+            </div>
+        </div>
+        <div class="layui-row">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                     <div class="demoTable">
+                          XXXX：
+                      <div class="layui-inline">
+                         <input type="text" id="demoReload" name="phone" lay-verify="required" autocomplete="off" placeholder="请输入联系电话" class="layui-input">  
+                      </div>
+                      <button class="layui-btn" data-type="reload">查询</button>
+                    </div>
+                    <table id="demo" lay-filter="demo" ></table>
+                </div>
+            </div>
+        </div>
+    </div>
+   </div>
+    <script src="https://heerey525.github.io/layui-v2.4.3/layui-v2.4.5/layui.js"></script>
     
-    getMarkers()
-
-    //发送请求获取站点 并且 标注到地图上
-    function getMarkers(){
-        $.ajax({
-	        url : "<%=basePath%>city/findAll",
-	        dataType : "json",
-	        success : function(res) {
-            	let requestData = res
-            	console.log(res)
-             //jfong 为后台返回数据
-	             var marker;		
-	          	 for(var i=0 ; i< requestData.length;i++){
-		            	var jfong=[ requestData[i].lat,requestData[i].lon];	
-			          	marker = new AMap.Marker({
-			              position: jfong,
-			              zIndex: 101,
-			              map:map,
-                          icon: 'http://a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png',
-                         // offset: new AMap.Pixel(-13, -30),
-                         // 设置是否可拖拽
-                         draggable: false,
-                         cursor: 'move'
-			              	});	
-		                 marker.setMap(map);	
-		            	 marker.city = requestData[i].city; //赋值站点名称
-		                 marker.on('click', function(e){
-		                	city = e.target.city
-                            openDilog()
-		            	 });
-	           	 }	// for-end
-             }
-		
-        }) //	Ajax结束
-
-      }
-    function getAirData(){
-    	//次数据应该为接口返回数据
-    	let result =   {
-    		  "PM2.5": "53",
-    		  "PM10": "100",
-    		  "CO": "0.6",
-    		  "NO2": "42",
-    		  "O3": "98",
-    		  "SO2": "15",
-    	}
-    	$('.PM25').html(result['PM2.5'])
-    	$('.PM10').html(result['PM10'])
-    	$('.CO').html(result['CO'])
-    	$('.NO2').html(result['NO2'])
-    	$('.O3').html(result['O3'])
-    	$('.SO2').html(result['SO2'])
-    	//获取空气质量接口 暂时报错 
-        /*$.ajax({
-	        url : "<%=basePath%>data/taskSearch",
-	        dataType : "json",
-	        data:JSON.stringify({city:city}),
-            success : function(res) {
-            	let requestData = res
-           },
-          	
-		
-        }) *///	Ajax结束
-    }
-
-    function openDilog(){
-       let timer = 0
-       layer.open({
-         type: 1
-        ,title: false //不显示标题栏
-        ,closeBtn: true
-        ,area: '800px'
-        ,shade: 0.8
-        ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
-        ,btn: ['确定']
-        ,btnAlign: 'c'
-        ,moveType: 1 //拖拽模式，0或者1
-        ,content: $("#box")
-        ,yes: function(layero){
-           layer.close(1);
-           clearInterval(timer)
-        },
-        success:function(){
-        	timer = setInterval("getAirData()",1000)  //1000 获取空气数据的 周期 1000表示1秒
-        }
-        ,end:function(){
-           layer.close(0) 
-           clearInterval(timer)
-        }
-      });
+    <script type="text/html" id="barDemo">
+      <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+   
+    <script>
     
-    }
-	
-
-
-</script>
+   
+    layui.use('table', function(){
+    	 var table = layui.table,form = layui.form,$=layui.$;
+    	
+       
+        
+    
+    
+       //展示已知数据
+       table.render({
+           elem: '#demo'
+          ,toolbar: '#toolbarDemo'
+          ,url:'<%=basePath%>swork/myWork'
+          ,cols: [[ //标题栏
+             {field: 'committime', title: '提交时间', }
+            ,{field: 'status', title: '批改状态'}
+            ,{field: 'teachername', title: '老师名字'}
+            ,{field: 'score', title: '分数'}
+            ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+         ]]
+        ,id:'testReload'
+        ,skin: 'line' //表格风格
+        ,even: true
+        ,page: true //是否显示分页
+        ,limits: [5, 7, 10]
+        ,limit: 5 //每页默认显示的数量
+       });
+       var  active = {
+    	       reload: function(){
+    	         var demoReload = $('#demoReload');
+    	         
+    	         //执行重载
+    	         table.reload('testReload', {
+    	           page: {
+    	             curr: 1 //重新从第 1 页开始
+    	           }
+    	           ,where: {
+    	             key: demoReload.val()
+    	           }
+    	         });
+    	       }
+    	     };
+    	     
+    	     $('.demoTable .layui-btn').on('click', function(){
+    	       var type = $(this).data('type');
+    	       active[type] ? active[type].call(this) : '';
+    	     });
+       
+    
+      
+     
+       //监听行工具事件
+       table.on('tool(demo)', function(obj){
+         var data = obj.data;
+         //console.log(obj)
+         if(obj.event === 'del'){
+           layer.confirm('真的删除行么', function(index){
+        	  $.ajax({
+                   url:"<%=basePath%>swork/delete",
+                   type:'post',//method请求方式，get或者post
+                   dataType:'json',//预期服务器返回的数据类型
+                   data:JSON.stringify({id:data.id}),
+                   contentType: "application/json; charset=utf-8",
+                   success:function(res){//res为相应体,function为回调函数
+                	   obj.del();
+                       layer.close(index);
+                       $(".layui-laypage-btn")[0].click();
+                    
+                   },
+                   error:function(){
+                       layer.alert('操作失败！！！',{icon:5});
+                   }
+                 });
+           
+           });
+         } 
+       });
+     
+});
+   </script>
 </body>
 </html>
