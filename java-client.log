@@ -1,0 +1,1 @@
+2019-04-22 12:50:40,392 ERROR [qtp2143700452-24] com.chat.utils.ResponseHandler [ResponseHandler.java : 46] error_code:400 error_msg:Bad Request error_desc:Application null Entity user requires that property named username be unique, value of zhangsan exists
