@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 
 import com.chat.pojo.TbUser;
 import com.chat.service.IMUserAPI;
@@ -63,12 +64,15 @@ public class UserController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/register",produces = "application/json;charset=UTF-8")
-	public Result add(@RequestBody TbUser tbUser){
+	public Result add(String username,String password){
 		try {
-			TbUser haveUser=userService.findByUserName(tbUser.getUsername());
+			TbUser haveUser=userService.findByUserName(username);
 			if(haveUser!=null) {
 				return new Result(false, "已经存在此用户,请重新注册");
 			}else {
+				TbUser tbUser=new TbUser();
+				tbUser.setUsername(username);
+				tbUser.setPassword(password);
 				RegisterUsers users = new RegisterUsers();
 				User user = new User();
 				BeanUtils.copyProperties(tbUser, user);
@@ -120,6 +124,7 @@ public class UserController {
 	 * @param user
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping("/update")
 	public Result update(@RequestBody TbUser user){
 		try {
@@ -149,9 +154,15 @@ public class UserController {
 	 * @param rows
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping("/search")
-	public PageResult search(@RequestBody TbUser user, int page, int rows  ){
-		return userService.findPage(user, page, rows);		
+	public PageResult search(String key , int page, int limit  ){
+		TbUser user=null;
+		if(!StringUtils.isEmpty(key)) {
+			user=new TbUser();
+			user.setUsername(key);
+		}
+		return userService.findPage(user, page, limit);		
 	}
 	
 }

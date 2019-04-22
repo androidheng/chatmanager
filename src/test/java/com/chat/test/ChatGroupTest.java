@@ -29,9 +29,9 @@ public class ChatGroupTest {
 
     @Test
     public void getGroupsInfo() {
-        String[] grousIds = new String[2];
-        grousIds[0] = "11189173157890";
-        grousIds[1] = "259168197054300592";
+        String[] grousIds = new String[1];
+        grousIds[0] = "80266435559425";
+      ///  grousIds[1] = "259168197054300592";
         Object result = easemobChatGroup.getChatGroupDetails(grousIds);
         logger.info(result.toString());
     }
@@ -39,7 +39,7 @@ public class ChatGroupTest {
     @Test
     public void createGroup() {
         Group group = new Group();
-        group.groupname("groupA").desc("a new group")._public(true).maxusers(50).approval(false).owner("stringa");
+        group.groupname("groupA").desc("a new group")._public(true).maxusers(50).approval(false).owner("zmz");
         Object result = easemobChatGroup.createChatGroup(group);
         logger.info(result.toString());
     }

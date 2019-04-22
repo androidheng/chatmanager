@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
 	public PageResult findPage(int pageNum, int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);		
 		Page<TbUser> page=   (Page<TbUser>) userMapper.selectByExample(null);
-		return new PageResult(page.getTotal(), page.getResult());
+		return new PageResult(0,"",page.getTotal(), page.getResult());
 	}
 
 	/**
@@ -85,11 +85,13 @@ public class UserServiceImpl implements UserService {
 		Criteria criteria = example.createCriteria();
 		
 		if(user!=null){			
-				
+			if(user.getUsername()!=null) {
+				criteria.andUsernameEqualTo(user.getUsername());
+			}	
 		}
 		
 		Page<TbUser> page= (Page<TbUser>)userMapper.selectByExample(example);		
-		return new PageResult(page.getTotal(), page.getResult());
+		return new PageResult(0,"",page.getTotal(), page.getResult());
 	}
 
 		@Override

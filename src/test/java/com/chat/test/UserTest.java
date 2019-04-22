@@ -25,7 +25,7 @@ public class UserTest {
     @Test
     public void createUser() {
         RegisterUsers users = new RegisterUsers();
-        User user = new User().username("aaaa1234567" + new Random().nextInt(500)).password("123456");
+        User user = new User().username("lisi").password("123456");
         users.add(user);
         String result = (String) easemobIMUsers.createNewIMUserSingle(users);
         System.out.println(result);
