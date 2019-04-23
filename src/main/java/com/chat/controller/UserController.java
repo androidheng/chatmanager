@@ -26,7 +26,6 @@ import io.swagger.client.model.RegisterUsers;
 import io.swagger.client.model.User;
 /**
  * controller
- * @author Administrator
  *
  */
 @Controller
