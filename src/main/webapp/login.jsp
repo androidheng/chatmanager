@@ -11,40 +11,43 @@
     <link rel="stylesheet" href="<%=basePath%>assets/css/login.css">
     <link rel="icon" href="/favicon.ico">
     <title>管理后台</title>
+    <style>
+       h4{
+         width:100%;
+         text-align:center;
+       }
+       .login-form .input-group .input-field{
+         width:80%;
+         display:inline-block;
+       }
+    </style>
 </head>
 <body class="login-wrap">
     <div class="login-container">
         <form class="login-form layui-form"  action="">
+            <h4>管理后台</h4>
             <div class="layui-form-item">
                 <div class="input-group">
-                    <input type="text" id="username" name="username" lay-verify="userName" class="input-field">
-                    <label for="username" class="input-label">
-                        <span class="label-title">用户名</span>
-                    </label>
+                    <span class="label-title">用户名</span>
+                    <input type="text" id="username" name="username" lay-verify="userName" value="admin" class="input-field">
+                   
                 </div>
             </div>
           
             <div class="input-group">
-                <input type="password" name="password"  id="password" lay-verify="pass" class="input-field">
-                <label for="password" class="input-label">
-                    <span class="label-title">密码</span>
-                </label>
+                <span class="label-title">密码</span>
+                <input type="password" name="password" value="admin"  id="password" lay-verify="pass" class="input-field">
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label"  style="text-align:left">选择站点</label>
-                <div class="layui-input-block">
-                  <select name="cid" id="cityList" lay-verify="city" lay-filter="cityList">
-                    
-                  </select>
-                </div>
-              </div>
-            <button type="button" class="login-button" lay-submit="" lay-filter="login">登录<i class="ai ai-enter"></i></button>
+           
+            <a href="<%=basePath%>index.jsp">
+               <button type="button" class="login-button" lay-submit="" lay-filter="login">登录<i class="ai ai-enter"></i></button>
+            </a>
         </form>
     </div>
 </body>
 <script src="<%=basePath%>assets/layui.js"></script>
 <script src="<%=basePath%>/js/login.js"></script>
-<script>
+<!--  <script>
 	  layui.use(['form'], function(){
       var form = layui.form
       ,layer = layui.layer
@@ -65,41 +68,12 @@
           /^[\S]{6,12}$/
           ,'密码必须6到12位，且不能出现空格'
         ]
-      });
-    //重新渲染表单
-      function renderForm(){
-       layui.use('form', function(){
-       var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加()
-       form.render();
-       });
-       }
-      getoption()
-      //获取站点信息列表
-      function getoption(){
-    
-     	$.ajax({
-             url:"<%=basePath%>city/findAll",
-             type:'post',//method请求方式，get或者post
-             dataType:'json',//预期服务器返回的数据类型
-             contentType: "application/json; charset=utf-8",
-             success:function(res){//res为相应体,function为回调函数
-            	
-                 let options = "<option value=''></option>"
-                 res.forEach(item=>{
-                	 options+="<option value='" + item.id + "'>" + item.city + "</option>";
-                 })
-                
-                 $("#cityList").append(options)
-              
-                 renderForm()
-             },
-             error:function(){
-               layer.alert('操作失败！！！',{icon:5});
-             }
-           });
-      }
+      });*/
+  
+   
+     
       //监听提交
-      form.on('submit(login)', function(data){
+     form.on('submit(login)', function(data){
     	  data.field.cid = + data.field.cid
     	  $.ajax({
             url:"<%=basePath%>user/login",
@@ -110,23 +84,20 @@
             success:function(res){//res为相应体,function为回调函数
               if(res.success){
                 layer.alert(res.message,{icon:1});
-                location.href="<%=basePath%>index.jsp";
-              //$("#res").click();//调用重置按钮将表单数据清空
-            }else{
-              layer.alert(res.message,{icon: 5});
-            }
-          },
-          error:function(){
+                 location.href="<%=basePath%>index.jsp";
+              
+              }else{
+                layer.alert(res.message,{icon: 5});
+              }
+           },
+           error:function(){
             layer.alert('操作失败！！！',{icon:5});
           }
         });
-        /*location.href = 'index.html'
-        layer.alert(JSON.stringify(data.field), {
-          title: '最终的提交信息'
-        })*/
+       
         return false;
       });
      });
    
-    </script>
+    </script>-->
 </html>
