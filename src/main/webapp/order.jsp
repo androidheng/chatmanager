@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="<%=basePath%>assets/css/layui.css">
     <link rel="stylesheet" href="<%=basePath%>assets/css/view.css"/>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+   
     <link rel="icon" href="/favicon.ico">
     <title>管理后台</title>
 </head>
@@ -42,7 +42,7 @@
         </div>
     </div>
    </div>
-    <script src="https://heerey525.github.io/layui-v2.4.3/layui-v2.4.5/layui.js"></script>
+    <script src="<%=basePath%>assets/layui.js"></script>
     
     <script type="text/html" id="barDemo">
       <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
