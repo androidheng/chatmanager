@@ -1,5 +1,7 @@
 package com.chat.test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.junit.Assert;
@@ -8,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.chat.service.impl.EasemobIMUsers;
+import com.chat.utils.TokenUtil;
 import com.google.gson.Gson;
 
 import io.swagger.client.model.NewPassword;
@@ -67,8 +70,26 @@ public class UserTest {
 
     @Test
     public void getFriend() {
-        String userName = "stringa";
+        String userName = "lisi";
         Object result = easemobIMUsers.getFriends(userName);
         logger.info(result.toString());
+    }
+    @Test
+    public void getLogin() {
+           String result = TokenUtil.initTokenUserByProp("zhangsan","1");
+           logger.info("返回结果:"+result);
+    }
+    @Test
+    public void getUserStatus() {
+    	String result = (String) easemobIMUsers.getIMUserStatus("zhangsan");
+    	logger.info(result);
+    }
+    @Test
+    public void TestJson() {
+    	List<String> list=new ArrayList<>();
+    	list.add("zhy");
+    	list.add("hyyyyy");
+    	Gson gson=new Gson();
+    	logger.info(gson.toJson(list));
     }
 }

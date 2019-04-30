@@ -21,6 +21,18 @@ public class EasemobIMUsers  implements IMUserAPI {
 	private UsersApi api = new UsersApi();
 	private ResponseHandler responseHandler = new ResponseHandler();
 	@Override
+	public Object createLogin(final Object payload) {
+		return responseHandler.handle(new EasemobAPI() {
+			@Override
+			public String invokeEasemobAPI() throws ApiException {
+				RegisterUsers users=(RegisterUsers) payload;
+				String username=users.get(0).getUsername();
+				String password=users.get(0).getPassword();
+				return api.orgNameAppNameUsersPost(OrgInfo.ORG_NAME,OrgInfo.APP_NAME, (RegisterUsers) payload,TokenUtil.getUserToken(username,password));
+			}
+		});
+	}
+	@Override
 	public Object createNewIMUserSingle(final Object payload) {
 		return responseHandler.handle(new EasemobAPI() {
 			@Override

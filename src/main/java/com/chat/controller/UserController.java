@@ -22,6 +22,8 @@ import com.google.gson.Gson;
 
 import entity.PageResult;
 import entity.Result;
+import io.swagger.client.model.NewPassword;
+import io.swagger.client.model.Nickname;
 import io.swagger.client.model.RegisterUsers;
 import io.swagger.client.model.User;
 /**
@@ -117,6 +119,7 @@ public class UserController {
 			return new Result(false, "删除失败！");
 		}
 	}
+
 	
 	/**
 	 * 修改
@@ -127,7 +130,19 @@ public class UserController {
 	@RequestMapping("/update")
 	public Result update(@RequestBody TbUser user){
 		try {
-			userService.update(user);
+			TbUser tbUser=userService.findOne(user.getId());
+			String userName = tbUser.getUsername();
+	        Nickname nickname = new Nickname();
+	        nickname.setNickname(user.getNickname());
+			String result=(String) imUserAPI.modifyIMUserNickNameWithAdminToken(userName,nickname);
+			Gson gson=new Gson();
+			RegisterBean registerBean = gson.fromJson(result, RegisterBean.class);
+			if(registerBean!=null) {
+				tbUser.setNickname(user.getNickname());
+				userService.update(tbUser);
+			}
+			logger.info(result);
+		
 			return new Result(true, "修改成功");
 		} catch (Exception e) {
 			e.printStackTrace();

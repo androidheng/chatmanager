@@ -1,5 +1,7 @@
 package com.chat.service.impl;
 
+import org.springframework.stereotype.Service;
+
 import com.chat.service.ChatGroupAPI;
 import com.chat.utils.EasemobAPI;
 import com.chat.utils.OrgInfo;
@@ -11,7 +13,7 @@ import io.swagger.client.StringUtil;
 import io.swagger.client.api.GroupsApi;
 import io.swagger.client.model.*;
 
-
+@Service
 public class EasemobChatGroup implements ChatGroupAPI {
 
     private ResponseHandler responseHandler = new ResponseHandler();

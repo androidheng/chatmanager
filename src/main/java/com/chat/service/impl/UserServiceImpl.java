@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public void update(TbUser user){
-		userMapper.updateByPrimaryKey(user);
+		userMapper.updateByPrimaryKeySelective(user);
 	}	
 	
 	/**

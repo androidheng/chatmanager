@@ -9,6 +9,7 @@ package com.chat.service;
  */
 public interface IMUserAPI {
 
+	Object createLogin(Object payload);
 	/**
 	 * 注册IM用户[单个] <br>
 	 * POST

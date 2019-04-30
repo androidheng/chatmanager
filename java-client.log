@@ -1,1 +1,1 @@
-2019-04-22 12:50:40,392 ERROR [qtp2143700452-24] com.chat.utils.ResponseHandler [ResponseHandler.java : 46] error_code:400 error_msg:Bad Request error_desc:Application null Entity user requires that property named username be unique, value of zhangsan exists
+2019-04-30 14:07:55,246 ERROR [qtp2143700452-16] com.chat.utils.ResponseHandler [ResponseHandler.java : 46] error_code:404 error_msg:Not Found error_desc:grpID 80951462920193 does not exist!
