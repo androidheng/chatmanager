@@ -42,13 +42,13 @@
                 <ul id="Nav" class="layui-nav layui-nav-tree">
 
                     <li class="layui-nav-item">
-                            <a href="<%=basePath%>order.jsp">
+                            <a href="<%=basePath%>usermanager.jsp">
                                 <i class="layui-icon">&#xe612;</i>
                                 <em>用户管理</em>
                             </a>
                         </li>
                     <li class="layui-nav-item">
-                            <a href="<%=basePath%>form.jsp">
+                            <a href="<%=basePath%>groupmanager.jsp">
                                  <i class="layui-icon">&#xe612;</i>
                                  <em>群组管理</em>
                              </a>

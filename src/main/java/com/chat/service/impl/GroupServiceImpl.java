@@ -2,6 +2,8 @@ package com.chat.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.chat.mapper.TbGroupMapper;
@@ -87,7 +89,9 @@ public class GroupServiceImpl implements GroupService {
 		Criteria criteria = example.createCriteria();
 		
 		if(group!=null){			
-				
+			if(!StringUtils.isEmpty(group.getGroupname())) {
+				criteria.andGroupnameLike("%"+group.getGroupname()+"%");
+			}	
 		}
 		
 		Page<TbGroup> page= (Page<TbGroup>)groupMapper.selectByExample(example);		

@@ -41,7 +41,7 @@
         </div>
     </div>
    </div>
-    <script src="<%=basePath%>assets/layui.js"></script>
+    <script src="<%=basePath%>assets/layui.all.js"></script>
     
     <script type="text/html" id="barDemo">
        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
@@ -60,12 +60,12 @@
          table.render({
            elem: '#demo'
           ,toolbar: '#toolbarDemo'
-          ,url:'<%=basePath%>swork/myWork'
+          ,url:'<%=basePath%>chatGroup/search'
           ,cols: [[ //标题栏
-             {field: 'committime', title: '提交时间', }
-            ,{field: 'status', title: '批改状态'}
-            ,{field: 'teachername', title: '老师名字'}
-            ,{field: 'score', title: '分数'}
+             {field: 'id', title: 'id', }
+             ,{field: 'groupname', title: '群组名称', }
+            ,{field: 'owner', title: '群主'}
+            ,{field: 'desc', title: '描述'}
             ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
          ]]
         ,id:'testReload'

@@ -1,24 +1,21 @@
 package com.chat.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.chat.pojo.TbGroup;
 import com.chat.pojo.TbGroupmembers;
+import com.chat.pojo.TbUser;
 import com.chat.service.ChatGroupAPI;
 import com.chat.service.GroupService;
 import com.chat.service.GroupmembersService;
-import com.chat.test.ChatGroupTest;
 import com.chat.vo.ChatGroupBean;
-import com.chat.vo.RegisterBean;
 import com.google.gson.Gson;
 
 import entity.PageResult;
@@ -86,15 +83,9 @@ public class ChatGroupController {
 		        Object result = chatGroupAPI.addBatchUsersToChatGroup(groupId, userNames);
 		       // logger.info(result.toString());
 		    }
-		  //获取群组里面的所有成员
-		  @RequestMapping("/getUsersFromGroup")
-		  @ResponseBody
-		   public PageResult getUsersFromGroup(int id) {
-			   TbGroup tbGroup = groupService.findOne(id);
-		        return groupmembersService.findAllByGroupId(tbGroup.getGroupid());
-		    }
+		 
 		   //T人
-		  @RequestMapping("/removeUsersFromGroup")
+		  @RequestMapping("/remove")
 		  @ResponseBody
 		   public Result removeUsersFromGroup(@RequestBody TbGroupmembers tbGroupmembers) {
 			   tbGroupmembers=groupmembersService.findOne(tbGroupmembers.getId());
@@ -109,19 +100,39 @@ public class ChatGroupController {
 		        return new Result(false, "移除失败!");
 		  }
 		   //解散群
-		  @RequestMapping("/deleteChatGroup")
+		  @RequestMapping("/delete")
 		  @ResponseBody
-		   public Result deleteChatGroup(int id) {
-			  TbGroup tbGroup = groupService.findOne(id);
+		   public Result deleteChatGroup(@RequestBody TbGroup group) {
+			  TbGroup tbGroup = groupService.findOne(group.getId());
 			  
 			   String result = (String) chatGroupAPI.deleteChatGroup(tbGroup.getGroupid());
 			   Gson gson=new Gson();
 			   ChatGroupBean chatGroupBean = gson.fromJson(result, ChatGroupBean.class);
 		        logger.info((chatGroupBean==null)+"");
 		        if(chatGroupBean!=null) {
-		        	groupService.delete(id);
+		        	groupService.delete(group.getId());
 		        	return new Result(true, "解散成功!");
 		        }
 		        return new Result(true, "解散失败!");
 		   }
+		  
+			@ResponseBody
+			@RequestMapping("/search")
+			public PageResult search(String key , int page, int limit  ){
+				TbGroup group=null;
+				if(!StringUtils.isEmpty(key)) {
+					group=new TbGroup();
+					group.setGroupname(key);
+				}
+				return groupService.findPage(group, page, limit);		
+			}
+			
+			 //获取群组里面的所有成员
+			  @RequestMapping("/detail")
+			  @ResponseBody
+			   public PageResult getUsersFromGroup(int id, int page, int limit ) {
+				   TbGroup tbGroup = groupService.findOne(id);
+				   
+			        return groupmembersService.findAllByGroupId(tbGroup.getGroupid());
+			    }
 }
