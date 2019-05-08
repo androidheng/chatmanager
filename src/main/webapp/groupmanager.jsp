@@ -110,16 +110,16 @@
   	        ,moveType: 1 //拖拽模式，0或者1
   	        ,content: $("#box"),
   	         success:function(layero, index){
+  	        	let currentIndex = index
   	           table.render({
   	             elem: '#detail'
   	            ,toolbar: '#toolbarDetail'
-  	            ,url:'<%=basePath%>swork/myWork'
+  	            ,url:'<%=basePath%>chatGroup/detail?id='+data.id
   	            ,cols: [[ //标题栏
-  	               {field: 'committime', title: '提交时间', }
-  	              ,{field: 'status', title: '批改状态'}
-  	              ,{field: 'teachername', title: '老师名字'}
-  	              ,{field: 'score', title: '分数'}
-  	              ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+  	               {field: 'id', title: '群组id', }
+  	              ,{field: 'groupname', title: '群组名称'}
+  	              ,{field: 'username', title: '用户名称'}
+  	              ,{fixed: 'right', title:'操作', toolbar: '#barDetail', width:150}
   	           ]]
   	          ,id:'testDetail'
   	          ,skin: 'line' //表格风格
@@ -136,15 +136,17 @@
   	           if(obj.event === 'del'){
   	             layer.confirm('真的删除行么', function(index){
   	          	  $.ajax({
-  	                     url:"<%=basePath%>swork/delete",
+  	                     url:"<%=basePath%>chatGroup/remove",
   	                     type:'post',//method请求方式，get或者post
   	                     dataType:'json',//预期服务器返回的数据类型
   	                     data:JSON.stringify({id:data.id}),
   	                     contentType: "application/json; charset=utf-8",
   	                     success:function(res){//res为相应体,function为回调函数
   	                  	   obj.del();
+  	                       
   	                       layer.close(index);
-  	                       $(".layui-laypage-btn")[0].click();
+  	                       layer.close(currentIndex);
+  	                      
   	                     },
   	                     error:function(){
   	                         layer.alert('操作失败！！！',{icon:5});
@@ -152,9 +154,7 @@
   	                   });
   	             
   	             });
-  	           } else{
-  	          	 getCitys(data)
-  	           }
+  	           } 
   	         });
   	         }
   	        
